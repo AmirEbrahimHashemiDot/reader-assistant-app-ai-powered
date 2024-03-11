@@ -37,7 +37,6 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 timer.cancel();
                 finish();
-
             }
         }, 6000, 1000);
 

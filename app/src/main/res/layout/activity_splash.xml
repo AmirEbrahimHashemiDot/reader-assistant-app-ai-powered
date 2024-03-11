@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".SplashActivity">
 
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animFrameSplash"
         android:layout_width="match_parent"
