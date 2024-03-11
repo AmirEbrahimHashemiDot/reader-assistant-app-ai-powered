@@ -8,6 +8,8 @@
         <!--<item name="android:fontFamily">@font/iransans</item>-->
         <!--<item name="android:fontFamily">@font/iransans_buld</item>-->
         <!--<item name="android:fontFamily">@font/iransans_regular</item>-->
+
+        <item name="android:windowActivityTransitions">true</item>
     </style>
 
     <style name="Theme.ReaderAssistant" parent="Base.Theme.ReaderAssistant" />
