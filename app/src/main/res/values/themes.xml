@@ -3,6 +3,11 @@
     <style name="Base.Theme.ReaderAssistant" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="android:fontFamily">@font/game_font_1</item>
+        <!--<item name="android:fontFamily">@font/iransans</item>-->
+        <!--<item name="android:fontFamily">@font/iransans_buld</item>-->
+        <!--<item name="android:fontFamily">@font/iransans_regular</item>-->
     </style>
 
     <style name="Theme.ReaderAssistant" parent="Base.Theme.ReaderAssistant" />
