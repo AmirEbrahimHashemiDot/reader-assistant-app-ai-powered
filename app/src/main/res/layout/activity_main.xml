@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:text="Choose Your Image File"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvImagePickerFileName"
+            app:layout_constraintBottom_toTopOf="@+id/tvImageFileName"
             app:layout_constraintEnd_toStartOf="@+id/guideline11"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -145,7 +145,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:padding="8dp"
-            android:src="@drawable/pdf_file_icon"
+            android:src="@drawable/img_icon"
             app:layout_constraintEnd_toStartOf="@+id/guideline10"
             app:layout_constraintStart_toStartOf="@+id/guideline11"
             app:layout_constraintTop_toTopOf="parent" />
@@ -165,7 +165,7 @@
             app:layout_constraintGuide_begin="250dp" />
 
         <TextView
-            android:id="@+id/tvImagePickerFileName"
+            android:id="@+id/tvImageFileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"

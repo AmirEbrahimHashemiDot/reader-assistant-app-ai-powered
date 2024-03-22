@@ -2,14 +2,15 @@ package com.amir.readerassistant;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView imgBtnChoosePdf, imgBtnChooseImage;
     public static final int PICK_PDF_FILE_REQUEST_CODE = 99;
     public static final int PICK_IMAGE_FILE_REQUEST_CODE = 1;
-    Uri selectedFileUri;
+    Uri selectedPdfUri, selectedImageUri;
+
     String filePath;
     String selectedPdfFilePath;
 
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_redesign);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -73,7 +75,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("application/pdf");
-                startActivityForResult(intent, PICK_PDF_FILE_REQUEST_CODE);
+                try {
+                    startActivityForResult(intent, PICK_PDF_FILE_REQUEST_CODE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "E: " + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         imgBtnChoosePdf.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +90,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("application/pdf");
-                startActivityForResult(intent, PICK_PDF_FILE_REQUEST_CODE);
+                try {
+                    startActivityForResult(intent, PICK_PDF_FILE_REQUEST_CODE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "E: " + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -91,28 +105,35 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Pick PDF File.
-        selectedFileUri = data.getData();
-        String fileName = null;
-        if (selectedFileUri.getScheme().equals("content")) {
-            try (Cursor cursor = getContentResolver().query(selectedFileUri, null, null, null, null)) {
-                if (cursor != null && cursor.moveToFirst()) {
-                    int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                    fileName = cursor.getString(nameIndex);
+        if (data != null) {
+            // Pick PDF File.
+            selectedPdfUri = data.getData();
+            String fileName = null;
+            if (selectedPdfUri.getScheme().equals("content")) {
+                try (Cursor cursor = getContentResolver().query(selectedPdfUri, null, null, null, null)) {
+                    if (cursor != null && cursor.moveToFirst()) {
+                        int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                        fileName = cursor.getString(nameIndex);
+                    }
                 }
             }
+            tvPdfFileName.setText(fileName);
+        } else {
+            Log.i("TAG", "onActivityResult: Result was Null or Empty.");
         }
-        tvPdfFileName.setText(fileName);
+
 
         // Pick Image File.
         if (requestCode == PICK_IMAGE_FILE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-            imgBtnChooseImage.setImageURI(selectedImage);
+            selectedImageUri = data.getData();
+            imgBtnChooseImage.setImageURI(selectedImageUri);
+        } else {
+            Log.i("TAG", "onActivityResult: Result was Null or Empty.");
         }
     }
 
     private void setUpUIViews() {
-        tvImagePickerFileName = findViewById(R.id.tvImagePickerFileName);
+        tvImagePickerFileName = findViewById(R.id.tvImageFileName);
         imgBtnChooseImage = findViewById(R.id.imgBtnChooseImage);
         tvTitleChoosePdfFIle = findViewById(R.id.tvTitleChoosePdfFIle);
         tvPdfFileName = findViewById(R.id.tvPdfFileName);

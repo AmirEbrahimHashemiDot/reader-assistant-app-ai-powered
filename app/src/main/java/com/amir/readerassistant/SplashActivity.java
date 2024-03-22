@@ -60,7 +60,7 @@ public class SplashActivity extends AppCompatActivity {
                 timer.cancel();
                 finish();
             }
-        }, 6000, 1000);
+        }, 2000, 1000);
     }
 
     private void setUpUIViews() {
