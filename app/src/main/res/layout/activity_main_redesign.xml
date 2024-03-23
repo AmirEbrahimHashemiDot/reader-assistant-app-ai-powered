@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:fontFamily="@font/ltsaeada_bold"
         android:id="@+id/titleMainAct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,18 +17,19 @@
         android:text="Reader Assistant Powered By AI"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:textColor="@color/black"
         android:id="@+id/deskMainAct"
         android:layout_width="350dp"
         android:layout_height="53dp"
         android:layout_marginTop="12dp"
         android:text="Just upload your pdf, ask questions and get answers."
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleMainAct" />
@@ -89,15 +91,18 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:textColor="@color/black"
                     android:id="@+id/tvTitleChoosePdfFIle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Choose Your PDF File"
-                    android:textSize="20sp"
+                    android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imgBtnChoosePdfFile"
                     app:layout_constraintEnd_toStartOf="@+id/guideline9"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.534" />
 
                 <ImageView
                     android:id="@+id/imgBtnChoosePdfFile"
@@ -158,15 +163,42 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvPdfFileName" />
 
                 <TextView
+                    android:textColor="@color/black"
                     android:id="@+id/tvTitleChooseImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Choose Your Image File"
-                    android:textSize="20sp"
+                    android:textSize="17sp"
                     app:layout_constraintBottom_toTopOf="@+id/tvImageFileName"
-                    app:layout_constraintEnd_toEndOf="@+id/tvTitleChoosePdfFIle"
                     app:layout_constraintStart_toStartOf="@+id/tvTitleChoosePdfFIle"
                     app:layout_constraintTop_toTopOf="@+id/imgBtnChooseImage" />
+
+                <ImageView
+                    android:id="@+id/imgRemoveSelectedPdfFile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgBtnChoosePdfFile"
+                    app:layout_constraintStart_toEndOf="@+id/imgBtnChoosePdfFile"
+                    app:layout_constraintTop_toTopOf="@+id/imgBtnChoosePdfFile"
+                    app:srcCompat="@drawable/ic_delete_file" />
+
+                <ImageView
+                    android:id="@+id/imgRemoveSelectedImageFile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/tvImageFileName"
+                    app:layout_constraintStart_toEndOf="@+id/imgBtnChooseImage"
+                    app:layout_constraintTop_toTopOf="@+id/imgBtnChooseImage"
+                    app:srcCompat="@drawable/ic_delete_file" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="16dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -176,6 +208,34 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:id="@+id/btnUploadFile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="Explore My File"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.913" />
+
+    <TextView
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:id="@+id/tvNote1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="* You can only select one option at a time."
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

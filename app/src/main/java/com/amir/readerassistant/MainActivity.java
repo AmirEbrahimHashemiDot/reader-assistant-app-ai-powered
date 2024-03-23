@@ -26,10 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
     TextView titleMainAct, deskMainAct, tvTitleChooseImageFile, tvPdfFileName, tvTitleChoosePdfFIle, tvImagePickerFileName;
     LottieAnimationView animFrameMainAct;
-    ImageView imgBtnChoosePdf, imgBtnChooseImage;
+    ImageView imgBtnChoosePdfFile, imgBtnChooseImage, imgRemoveSelectedPdfFile, imgRemoveSelectedImageFile;
     public static final int PICK_PDF_FILE_REQUEST_CODE = 99;
     public static final int PICK_IMAGE_FILE_REQUEST_CODE = 1;
     Uri selectedPdfUri, selectedImageUri;
+    String pdfFileName, imageFileName;
 
     String filePath;
     String selectedPdfFilePath;
@@ -49,6 +50,37 @@ public class MainActivity extends AppCompatActivity {
         setUpUIViews();
         pickPdfFile();
         pickImageFile();
+        removeSelectedPDF();
+        removeSelectedImage();
+    }
+
+    private void removeSelectedImage() {
+        imgRemoveSelectedImageFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedImageUri = null;
+                tvImagePickerFileName.setText("");
+
+                imgRemoveSelectedPdfFile.setClickable(true);
+                imgBtnChoosePdfFile.setClickable(true);
+                tvTitleChoosePdfFIle.setClickable(true);
+                imgBtnChooseImage.setImageResource(R.drawable.img_icon_transe);
+            }
+        });
+    }
+
+    private void removeSelectedPDF() {
+        imgRemoveSelectedPdfFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedPdfUri = null;
+                tvPdfFileName.setText("");
+
+                imgRemoveSelectedImageFile.setClickable(true);
+                imgBtnChooseImage.setClickable(true);
+                tvTitleChooseImageFile.setClickable(true);
+            }
+        });
     }
 
     private void pickImageFile() {
@@ -84,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        imgBtnChoosePdf.setOnClickListener(new View.OnClickListener() {
+        imgBtnChoosePdfFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -105,34 +137,55 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data != null) {
-            // Pick PDF File.
+        // Pick PDF File.
+        if (requestCode == PICK_PDF_FILE_REQUEST_CODE && data != null) {
             selectedPdfUri = data.getData();
-            String fileName = null;
+            pdfFileName = null;
             if (selectedPdfUri.getScheme().equals("content")) {
                 try (Cursor cursor = getContentResolver().query(selectedPdfUri, null, null, null, null)) {
                     if (cursor != null && cursor.moveToFirst()) {
                         int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                        fileName = cursor.getString(nameIndex);
+                        pdfFileName = cursor.getString(nameIndex);
                     }
                 }
             }
-            tvPdfFileName.setText(fileName);
+            tvPdfFileName.setText(pdfFileName);
+
+            imgRemoveSelectedImageFile.setClickable(false);
+            imgBtnChooseImage.setClickable(false);
+            tvTitleChooseImageFile.setClickable(false);
         } else {
             Log.i("TAG", "onActivityResult: Result was Null or Empty.");
         }
-
 
         // Pick Image File.
         if (requestCode == PICK_IMAGE_FILE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             selectedImageUri = data.getData();
             imgBtnChooseImage.setImageURI(selectedImageUri);
+
+            imageFileName = null;
+            if (selectedImageUri.getScheme().equals("content")) {
+                try (Cursor cursor = getContentResolver().query(selectedImageUri, null, null, null, null)) {
+                    if (cursor != null && cursor.moveToFirst()) {
+                        int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                        imageFileName = cursor.getString(nameIndex);
+                    }
+                }
+            }
+            tvImagePickerFileName.setText(imageFileName);
+
+            imgRemoveSelectedPdfFile.setClickable(false);
+            imgBtnChoosePdfFile.setClickable(false);
+            tvTitleChoosePdfFIle.setClickable(false);
+
         } else {
             Log.i("TAG", "onActivityResult: Result was Null or Empty.");
         }
     }
 
     private void setUpUIViews() {
+        imgRemoveSelectedImageFile = findViewById(R.id.imgRemoveSelectedImageFile);
+        imgRemoveSelectedPdfFile = findViewById(R.id.imgRemoveSelectedPdfFile);
         tvImagePickerFileName = findViewById(R.id.tvImageFileName);
         imgBtnChooseImage = findViewById(R.id.imgBtnChooseImage);
         tvTitleChoosePdfFIle = findViewById(R.id.tvTitleChoosePdfFIle);
@@ -141,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         deskMainAct = findViewById(R.id.deskMainAct);
         tvTitleChooseImageFile = findViewById(R.id.tvTitleChooseImage);
         animFrameMainAct = findViewById(R.id.animFrameMainAct);
-        imgBtnChoosePdf = findViewById(R.id.imgBtnChoosePdfFile);
+        imgBtnChoosePdfFile = findViewById(R.id.imgBtnChoosePdfFile);
         animFrameMainAct.setRepeatCount(LottieDrawable.INFINITE);
     }
 }
