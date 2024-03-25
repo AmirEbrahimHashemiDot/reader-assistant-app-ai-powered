@@ -6,5 +6,7 @@
 
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+        <item name="android:fontFamily">@font/ltsaeada_medium</item>
     </style>
 </resources>

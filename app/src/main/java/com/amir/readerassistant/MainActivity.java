@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     TextView titleMainAct, deskMainAct, tvTitleChooseImageFile, tvPdfFileName, tvTitleChoosePdfFIle, tvImagePickerFileName;
     LottieAnimationView animFrameMainAct;
     ImageView imgBtnChoosePdfFile, imgBtnChooseImage, imgRemoveSelectedPdfFile, imgRemoveSelectedImageFile;
+    Button btnUploadFile;
     public static final int PICK_PDF_FILE_REQUEST_CODE = 99;
     public static final int PICK_IMAGE_FILE_REQUEST_CODE = 1;
     Uri selectedPdfUri, selectedImageUri;
@@ -52,6 +54,17 @@ public class MainActivity extends AppCompatActivity {
         pickImageFile();
         removeSelectedPDF();
         removeSelectedImage();
+        exploreClicked();
+    }
+
+    private void exploreClicked() {
+        btnUploadFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ExploreActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void removeSelectedImage() {
@@ -184,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpUIViews() {
+        btnUploadFile = findViewById(R.id.btnUploadFile);
         imgRemoveSelectedImageFile = findViewById(R.id.imgRemoveSelectedImageFile);
         imgRemoveSelectedPdfFile = findViewById(R.id.imgRemoveSelectedPdfFile);
         tvImagePickerFileName = findViewById(R.id.tvImageFileName);
